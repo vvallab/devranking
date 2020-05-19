@@ -95,5 +95,6 @@ def store_commit_data(local_dir,es,es_index,es_blame_index,local_commit,remote_c
     # Since Git Blame produces duplicate data, getting only unique records
     blamelist_fil = [i for n, i in enumerate(blamelist) if i not in blamelist[n + 1:]]
     # using elasticsearch.py's helper tools to bulk load into elasticsearch's blame index
-    helpers.bulk(es,blamelist_fil,index=es_blame_index,doc_type ='blame',request_timeout = 2000)# -*- coding: utf-8 -*-
+    helpers.bulk(es,blamelist_fil,index=es_blame_index,doc_type ='blame',request_timeout = 2000)
+    es.indices.refresh([es_blame_index,es_index])
 
