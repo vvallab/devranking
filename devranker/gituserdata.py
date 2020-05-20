@@ -35,5 +35,5 @@ def get_user_data(es_instance,commit_index,blame_index):
         dev_score['scaled_score'] = dev_score.apply(lambda x: x.score if x.type == 'Clean' else x.score/2,axis=1)
         dev_score_refined = dev_score[['Author','commit_count','scaled_score']]
         dev_score_refined['average_score'] = dev_score_refined.groupby('Author').scaled_score.transform('mean').round()
-        dev_score_final = dev_score_refined[['Author','commit_count','average_score']].drop_duplicates().sort_values('average_score', ascending=False).reset_index().drop(columns = 'index') 
+        dev_score_final = dev_score_refined[['Author','commit_count','average_score']].drop_duplicates().sort_values('commit_count', ascending=False).reset_index().drop(columns = 'index') 
         return dev_score_final
